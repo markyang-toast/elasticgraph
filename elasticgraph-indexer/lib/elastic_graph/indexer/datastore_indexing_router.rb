@@ -127,7 +127,7 @@ module ElasticGraph
         # bother checking `failure_results` (because we don't expect a failure). If there was a failure
         # we want to be notified about it.
         def successful_operations(check_failures: true)
-          successful_operations_by_cluster_name(check_failures: check_failures).values.flatten(1).uniq
+          successful_operations_by_cluster_name(check_failures: check_failures).values.flatten(1).uniq(&:object_id)
         end
       end
 

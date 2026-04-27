@@ -41,9 +41,12 @@ module ElasticGraph
       # Like `process`, but returns failures instead of raising an exception.
       # The caller is responsible for handling the failures.
       def process_returning_failures(events, refresh_indices: false)
-        factory_results_by_event = events.to_h { |event| [event, @operation_factory.build(event)] }
+        # Use object_id as Hash key instead of the event Hash itself to avoid
+        # O(n) Hash#hash computation on deeply nested event trees per lookup.
+        factory_results_by_event_id = {}
+        events.each { |event| factory_results_by_event_id[event.object_id] = @operation_factory.build(event) }
 
-        factory_results = factory_results_by_event.values
+        factory_results = factory_results_by_event_id.values
 
         bulk_result = @datastore_router.bulk(factory_results.flat_map(&:operations), refresh: refresh_indices)
         successful_operations = bulk_result.successful_operations(check_failures: false)
@@ -53,7 +56,7 @@ module ElasticGraph
         all_failures =
           factory_results.map(&:failed_event_error).compact +
           bulk_result.failure_results.map do |result|
-            all_operations_for_event = factory_results_by_event.fetch(result.event).operations
+            all_operations_for_event = factory_results_by_event_id.fetch(result.event.object_id).operations
             FailedEventError.from_failed_operation_result(result, all_operations_for_event.to_set)
           end
 
@@ -99,11 +102,12 @@ module ElasticGraph
 
       def calculate_latency_metrics(successful_operations, noop_results)
         current_time = @clock.now
-        successful_events = successful_operations.map(&:event).to_set
-        noop_events = noop_results.map(&:event).to_set
-        all_operations_events = successful_events + noop_events
+        # Use object_id-keyed hashes to avoid computing Hash#hash on event trees.
+        successful_oids = successful_operations.each_with_object({}) { |op, h| h[op.event.object_id] = op.event }
+        noop_oids = noop_results.each_with_object({}) { |r, h| h[r.event.object_id] = r.event }
+        all_events_by_oid = successful_oids.merge(noop_oids)
 
-        all_operations_events.each do |event|
+        all_events_by_oid.each do |oid, event|
           latencies_in_ms_from = {} # : Hash[String, Integer]
           slo_results = {} # : Hash[String, String]
 
@@ -118,7 +122,7 @@ module ElasticGraph
             end
           end
 
-          result = successful_events.include?(event) ? "success" : "noop"
+          result = successful_oids.key?(oid) ? "success" : "noop"
 
           @logger.info({
             "message_type" => "ElasticGraphIndexingLatencies",
