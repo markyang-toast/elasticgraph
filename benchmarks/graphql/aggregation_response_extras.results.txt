@@ -1,0 +1,100 @@
+
+======================================================================
+small — 10 buckets x 3 fields = 30 resolved fields
+======================================================================
+ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [arm64-darwin24]
+Warming up --------------------------------------
+extras: [:lookahead] (before)   190.000 i/100ms
+  extras: [:ast_node] (after)   202.000 i/100ms
+Calculating -------------------------------------
+extras: [:lookahead] (before)      2.062k (± 3.8%) i/s  (484.87 μs/i) -     10.450k in   5.066916s
+  extras: [:ast_node] (after)      2.114k (± 4.6%) i/s  (473.09 μs/i) -     10.706k in   5.064945s
+
+Comparison:
+  extras: [:ast_node] (after):     2113.7 i/s
+extras: [:lookahead] (before):     2062.4 i/s - same-ish: difference falls within error
+
+
+======================================================================
+medium — 100 buckets x 5 fields = 500 resolved fields
+======================================================================
+ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [arm64-darwin24]
+Warming up --------------------------------------
+extras: [:lookahead] (before)    23.000 i/100ms
+  extras: [:ast_node] (after)    24.000 i/100ms
+Calculating -------------------------------------
+extras: [:lookahead] (before)    212.381 (±13.7%) i/s    (4.71 ms/i) -      1.081k in   5.089899s
+  extras: [:ast_node] (after)    219.479 (±15.9%) i/s    (4.56 ms/i) -      1.104k in   5.030091s
+
+Comparison:
+  extras: [:ast_node] (after):      219.5 i/s
+extras: [:lookahead] (before):      212.4 i/s - same-ish: difference falls within error
+
+
+======================================================================
+large — 500 buckets x 10 fields = 5000 resolved fields
+======================================================================
+ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [arm64-darwin24]
+Warming up --------------------------------------
+extras: [:lookahead] (before)     2.000 i/100ms
+  extras: [:ast_node] (after)     3.000 i/100ms
+Calculating -------------------------------------
+extras: [:lookahead] (before)     28.227 (± 3.5%) i/s   (35.43 ms/i) -    142.000 in   5.030581s
+  extras: [:ast_node] (after)     30.993 (± 3.2%) i/s   (32.27 ms/i) -    156.000 in   5.033361s
+
+Comparison:
+  extras: [:ast_node] (after):       31.0 i/s
+extras: [:lookahead] (before):       28.2 i/s - 1.10x  slower
+
+
+======================================================================
+xlarge — 2000 buckets x 15 fields = 30000 resolved fields
+======================================================================
+ruby 3.4.4 (2025-05-14 revision a38531fd3f) +PRISM [arm64-darwin24]
+Warming up --------------------------------------
+extras: [:lookahead] (before)     1.000 i/100ms
+  extras: [:ast_node] (after)     1.000 i/100ms
+Calculating -------------------------------------
+extras: [:lookahead] (before)      4.796 (± 0.0%) i/s  (208.50 ms/i) -     24.000 in   5.004043s
+  extras: [:ast_node] (after)      5.356 (± 0.0%) i/s  (186.70 ms/i) -     27.000 in   5.040943s
+
+Comparison:
+  extras: [:ast_node] (after):        5.4 i/s
+extras: [:lookahead] (before):        4.8 i/s - 1.12x  slower
+
+
+======================================================================
+xlarge memory profile — extras: [:lookahead] (before)
+======================================================================
+total allocated: 262246 objects (33294808 bytes)
+total retained:  3 objects (192 bytes)
+
+top allocated objects by class:
+    160073  Hash
+     34080  Array
+     30000  GraphQL::Execution::Interpreter::Arguments
+     30000  GraphQL::Execution::Lookahead
+      4001  <<Unknown>>
+      4001  GraphQL::Execution::Interpreter::Runtime::GraphQLResultHash
+        31  Proc
+        16  GraphQL::StaticValidation::FieldsWillMerge::Field
+         5  Method
+         4  String
+
+======================================================================
+xlarge memory profile — extras: [:ast_node] (after)
+======================================================================
+total allocated: 172246 objects (24894808 bytes)
+total retained:  3 objects (192 bytes)
+
+top allocated objects by class:
+    130073  Hash
+     30000  GraphQL::Execution::Interpreter::Arguments
+      4080  Array
+      4001  <<Unknown>>
+      4001  GraphQL::Execution::Interpreter::Runtime::GraphQLResultHash
+        31  Proc
+        16  GraphQL::StaticValidation::FieldsWillMerge::Field
+         5  Method
+         4  String
+         2  GraphQL::Query::InputValidationResult
