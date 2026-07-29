@@ -49,6 +49,14 @@ There's a fifth optional argument: `lookahead`. It is a [`GraphQL::Execution::Lo
 which allows you to inspect the child field selections. However, providing it imposes some measurable overhead, and query resolution will be
 more performant if you omit it from your `resolve` definition.
 
+{: .alert-note}
+**Note**{: .alert-title}
+Alternately, you can accept an `ast_node` argument instead of `lookahead`. It is a
+[`GraphQL::Language::Nodes::Field` object](https://graphql-ruby.org/api-doc/latest/GraphQL/Language/Nodes/Field.html)
+for the field currently being resolved, which is useful when you only need details of that field (such as its
+alias) rather than its child selections. It is much cheaper to provide than `lookahead`, so prefer it when it suffices.
+A resolver can accept `lookahead` or `ast_node`, but not both.
+
 In this case, our `RollDiceResolver` simulates the rolling of the configured `number_of_dice`, each of which has a number of `sides`
 provided as a query argument. Finally, it multiplies the dice roll by a configured `multiplier`.
 

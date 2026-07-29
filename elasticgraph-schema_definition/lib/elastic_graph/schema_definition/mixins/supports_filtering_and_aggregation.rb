@@ -177,7 +177,7 @@ module ElasticGraph
             schema_def_state.factory.new_object_type agg_sub_aggs_type_ref.name do |t|
               under_field_description = "under `#{path.field_path_string}` " unless path.field_path.empty?
               t.documentation "Provides access to the `#{schema_def_state.schema_elements.sub_aggregations}` #{under_field_description}within each `#{type_ref.as_parent_aggregation(parent_doc_types: path.parent_doc_types).name}`."
-              t.resolve_fields_with :object_with_lookahead
+              t.resolve_fields_with :object_with_ast_node
 
               sub_aggregatable_fields.each do |field|
                 if field.nested?
@@ -252,7 +252,7 @@ module ElasticGraph
 
           new_non_empty_object_type type_ref.as_grouped_by.name do |t|
             t.documentation "Type used to specify the `#{name}` fields to group by for aggregations."
-            t.resolve_fields_with :object_with_lookahead
+            t.resolve_fields_with :object_with_ast_node
 
             graphql_fields_by_name.values.each do |field|
               field.define_grouped_by_field(t)
@@ -267,7 +267,7 @@ module ElasticGraph
 
           new_non_empty_object_type type_ref.as_aggregated_values.name do |t|
             t.documentation "Type used to perform aggregation computations on `#{name}` fields."
-            t.resolve_fields_with :object_with_lookahead
+            t.resolve_fields_with :object_with_ast_node
 
             graphql_fields_by_name.values.each do |field|
               field.define_aggregated_values_field(t)

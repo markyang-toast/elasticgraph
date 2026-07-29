@@ -14,6 +14,11 @@ module ElasticGraph
           lookahead: ::GraphQL::Execution::Lookahead,
           ?field: Schema::Field?
         ) -> PathSegment
+
+        def self.for_ast_node: (
+          ::GraphQL::Language::Nodes::Field,
+          ?field: Schema::Field?
+        ) -> PathSegment
       end
     end
   end

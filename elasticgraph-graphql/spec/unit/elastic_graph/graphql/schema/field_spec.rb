@@ -47,6 +47,35 @@ module ElasticGraph
           expect(field.inspect).to eq "#<ElasticGraph::GraphQL::Schema::Field Color.red>"
         end
 
+        describe "GraphQL `extras`" do
+          let(:schema) do
+            define_schema do |s|
+              s.object_type "Photo" do |t|
+                t.field "id", "ID!"
+                t.field "size", "Int"
+                t.index "photos"
+              end
+            end
+          end
+
+          it "enables no extras on a field whose resolver needs neither the lookahead nor the AST node" do
+            expect(extras_for("Photo", "size")).to eq []
+          end
+
+          it "enables only `:lookahead` on a field whose resolver needs the lookahead" do
+            expect(extras_for("Query", "photos")).to eq [:lookahead]
+          end
+
+          it "enables only `:ast_node` on aggregation response fields, since they just need the response key" do
+            expect(extras_for("PhotoGroupedBy", "size")).to eq [:ast_node]
+            expect(extras_for("PhotoAggregatedValues", "size")).to eq [:ast_node]
+          end
+
+          def extras_for(type_name, field_name)
+            schema.field_named(type_name, field_name).graphql_field.extras
+          end
+        end
+
         describe "#type" do
           it "returns the type of the field" do
             schema = define_schema do |s|

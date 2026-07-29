@@ -53,7 +53,7 @@ module QueryAdapterSpecSupport
       schema_field = @graphql.schema.field_named(parent_type.graphql_name, field.name)
 
       lookahead = args[:lookahead]
-      args = schema_field.args_to_schema_form(args.except(:lookahead))
+      args = schema_field.args_to_schema_form(args.except(:lookahead, :ast_node))
 
       if resolved_with_resolver_that_builds_datastore_query?(schema_field, object)
         field_key = "#{schema_field.parent_type.name}.#{lookahead.ast_nodes.first.alias || schema_field.name}"

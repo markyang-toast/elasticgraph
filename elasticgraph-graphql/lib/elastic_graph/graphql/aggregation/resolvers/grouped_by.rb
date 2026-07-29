@@ -7,6 +7,7 @@
 # frozen_string_literal: true
 
 require "elastic_graph/graphql/aggregation/field_path_encoder"
+require "elastic_graph/graphql/aggregation/path_segment"
 require "elastic_graph/support/hash_util"
 
 module ElasticGraph
@@ -14,8 +15,8 @@ module ElasticGraph
     module Aggregation
       module Resolvers
         class GroupedBy < ::Data.define(:bucket, :field_path)
-          def resolve(field:, object:, args:, context:, lookahead:)
-            new_field_path = field_path + [PathSegment.for(field: field, lookahead: lookahead)]
+          def resolve(field:, object:, args:, context:, ast_node:)
+            new_field_path = field_path + [PathSegment.for_ast_node(ast_node, field: field)]
             return with(field_path: new_field_path) if field.type.object?
 
             bucket_entry = Support::HashUtil.verbose_fetch(bucket, "key")

@@ -3,30 +3,37 @@ module ElasticGraph
     module RuntimeMetadata
       class GraphQLResolverSupertype
         attr_reader needs_lookahead: bool
+        attr_reader needs_ast_node: bool
         attr_reader resolver_ref: ::Hash[::String, ::String]
 
         def initialize: (
           needs_lookahead: bool,
+          needs_ast_node: bool,
           resolver_ref: ::Hash[::String, ::String]
         ) -> void
 
         def with: (
           ?needs_lookahead: bool,
+          ?needs_ast_node: bool,
           ?resolver_ref: ::Hash[::String, ::String]
         ) -> instance
 
         def self.new:
-          (needs_lookahead: bool, resolver_ref: ::Hash[::String, ::String]) -> instance
-          | (bool, ::Hash[::String, ::String]) -> instance
+          (needs_lookahead: bool, needs_ast_node: bool, resolver_ref: ::Hash[::String, ::String]) -> instance
+          | (bool, bool, ::Hash[::String, ::String]) -> instance
       end
 
       class GraphQLResolver < GraphQLResolverSupertype
         self.@with_lookahead_loader: ExtensionLoader?
         def self.with_lookahead_loader: () -> ExtensionLoader
 
+        self.@with_ast_node_loader: ExtensionLoader?
+        def self.with_ast_node_loader: () -> ExtensionLoader
+
         self.@without_lookahead_loader: ExtensionLoader?
         def self.without_lookahead_loader: () -> ExtensionLoader
 
+        NEEDS_AST_NODE: "needs_ast_node"
         NEEDS_LOOKAHEAD: "needs_lookahead"
         RESOLVER_REF: "resolver_ref"
 
@@ -36,6 +43,10 @@ module ElasticGraph
 
         class InterfaceWithLookahead
           include _GraphQLResolverWithLookahead
+        end
+
+        class InterfaceWithASTNode
+          include _GraphQLResolverWithASTNode
         end
 
         class InterfaceWithoutLookahead
@@ -55,6 +66,16 @@ module ElasticGraph
     ) { () -> ElasticGraph::GraphQL::DatastoreQuery } -> untyped
   end
 
+  interface _GraphQLResolvableWithASTNode
+    def resolve: (
+      field: ElasticGraph::GraphQL::Schema::Field,
+      object: untyped,
+      context: ::GraphQL::Query::Context,
+      args: ::Hash[::String, untyped],
+      ast_node: ::GraphQL::Language::Nodes::Field
+    ) -> untyped
+  end
+
   interface _GraphQLResolvableWithoutLookahead
     def resolve: (
       field: ElasticGraph::GraphQL::Schema::Field,
@@ -71,6 +92,15 @@ module ElasticGraph
     ) -> void
 
     include _GraphQLResolvableWithLookahead
+  end
+
+  interface _GraphQLResolverWithASTNode
+    def initialize: (
+      elasticgraph_graphql: GraphQL,
+      config: ::Hash[::Symbol, untyped]
+    ) -> void
+
+    include _GraphQLResolvableWithASTNode
   end
 
   interface _GraphQLResolverWithoutLookahead

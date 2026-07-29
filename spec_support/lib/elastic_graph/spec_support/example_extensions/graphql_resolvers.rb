@@ -15,6 +15,14 @@ module ElasticGraph
     end
   end
 
+  class GraphQLResolverWithASTNode
+    def initialize(elasticgraph_graphql:, config:)
+    end
+
+    def resolve(field:, object:, args:, context:, ast_node:)
+    end
+  end
+
   class GraphQLResolverWithoutLookahead
     def initialize(elasticgraph_graphql:, config:)
     end

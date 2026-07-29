@@ -23,6 +23,7 @@ module ElasticGraph
           :indexed_type_root_fields,
           :namespace_ref,
           :nested_relationships,
+          :object_with_ast_node,
           :object_with_lookahead,
           :object_without_lookahead
         )
@@ -46,6 +47,28 @@ module ElasticGraph
           graphql_resolver_with(
             needs_lookahead: true,
             resolver_ref: graphql_resolver_with_lookahead(param: 15).to_dumpable_hash
+          )
+        )
+      end
+
+      it "includes a registered `needs_ast_node: true` custom resolver when a field is defined that uses the resolver" do
+        result = graphql_resolvers_by_name do |schema|
+          schema.register_graphql_resolver :resolver1,
+            GraphQLResolverWithASTNode,
+            defined_at: "elastic_graph/spec_support/example_extensions/graphql_resolvers",
+            param: 15
+
+          schema.on_root_query_type do |t|
+            t.field "foo", "Int" do |f|
+              f.resolve_with :resolver1
+            end
+          end
+        end
+
+        expect(result.fetch(:resolver1)).to eq(
+          graphql_resolver_with(
+            needs_ast_node: true,
+            resolver_ref: graphql_resolver_with_ast_node(param: 15).to_dumpable_hash
           )
         )
       end
@@ -123,6 +146,7 @@ module ElasticGraph
               - :indexed_type_root_fields
               - :namespace_ref
               - :nested_relationships
+              - :object_with_ast_node
               - :object_with_lookahead
               - :object_without_lookahead
           EOS

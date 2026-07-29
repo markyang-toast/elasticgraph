@@ -78,6 +78,24 @@ module ElasticGraph
                       # Note that coercion of scalar values is handled by the `coerce_result` callback below.
                       schema_field.coerce_result(result)
                     end
+                  elsif resolver.method(:resolve).parameters.include?([:keyreq, :ast_node])
+                    lambda do |object, args, context|
+                      schema_field = context.fetch(:elastic_graph_schema).field_named(type_name, field_name)
+
+                      # Extract the `:ast_node` extra that we have configured this field to provide. Like
+                      # `:lookahead`, it is not a "real" arg in the schema and breaks `args_to_schema_form`
+                      # when we call that, so we need to peel it off here.
+                      ast_node = args[:ast_node]
+
+                      # Convert args to the form they were defined in the schema, undoing the normalization
+                      # the GraphQL gem does to convert them to Ruby keyword args form.
+                      args = schema_field.args_to_schema_form(args.except(:ast_node))
+
+                      result = resolver.resolve(field: schema_field, object: object, args: args, context: context, ast_node: ast_node)
+
+                      # Note that coercion of scalar values is handled by the `coerce_result` callback below.
+                      schema_field.coerce_result(result)
+                    end
                   else
                     lambda do |object, args, context|
                       schema_field = context.fetch(:elastic_graph_schema).field_named(type_name, field_name)

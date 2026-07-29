@@ -15,8 +15,8 @@ module ElasticGraph
     module Aggregation
       module Resolvers
         class AggregatedValues < ::Data.define(:aggregation_name, :bucket, :field_path)
-          def resolve(field:, object:, args:, context:, lookahead:)
-            return with(field_path: field_path + [PathSegment.for(field: field, lookahead: lookahead)]) if field.type.object?
+          def resolve(field:, object:, args:, context:, ast_node:)
+            return with(field_path: field_path + [PathSegment.for_ast_node(ast_node, field: field)]) if field.type.object?
 
             key = Key::AggregatedValue.new(
               aggregation_name: aggregation_name,

@@ -19,7 +19,15 @@ module ElasticGraph
         # Factory method that aids in building a `PathSegment` for a given `field` and `lookahead` node.
         def self.for(lookahead:, field: nil)
           ast_node = lookahead.ast_nodes.first # : ::GraphQL::Language::Nodes::Field
+          for_ast_node(ast_node, field: field)
+        end
 
+        # Factory method that aids in building a `PathSegment` for a given `field` and AST node.
+        #
+        # This is preferred over `for` when a resolver only needs the response key of the field
+        # currently being resolved, since requesting the `:ast_node` extra is significantly cheaper
+        # than requesting the `:lookahead` extra (which allocates a `Lookahead` per field per object).
+        def self.for_ast_node(ast_node, field: nil)
           new(
             name_in_graphql_query: ast_node.alias || ast_node.name,
             name_in_index: field&.name_in_index

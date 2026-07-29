@@ -21,6 +21,16 @@ module ElasticGraph
           end
         end
 
+        class WithASTNode
+          def initialize(elasticgraph_graphql:, config:)
+            # Nothing to initialize, but needs to be defined to satisfy the resolver interface.
+          end
+
+          def resolve(field:, object:, args:, context:, ast_node:)
+            object.resolve(field: field, object: object, args: args, context: context, ast_node: ast_node)
+          end
+        end
+
         class WithoutLookahead
           def initialize(elasticgraph_graphql:, config:)
             # Nothing to initialize, but needs to be defined to satisfy the resolver interface.

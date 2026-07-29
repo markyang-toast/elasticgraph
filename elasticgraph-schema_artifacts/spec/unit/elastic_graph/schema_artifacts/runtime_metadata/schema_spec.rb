@@ -309,6 +309,7 @@ module ElasticGraph
             }],
             "graphql_resolvers_by_name" => {
               "resolver1" => {
+                "needs_ast_node" => false,
                 "needs_lookahead" => true,
                 "resolver_ref" => {
                   "name" => "ElasticGraph::GraphQLResolverWithLookahead",

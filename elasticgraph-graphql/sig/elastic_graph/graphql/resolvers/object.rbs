@@ -6,6 +6,10 @@ module ElasticGraph
           include _GraphQLResolverWithLookahead
         end
 
+        class WithASTNode
+          include _GraphQLResolverWithASTNode
+        end
+
         class WithoutLookahead
           include _GraphQLResolverWithoutLookahead
         end

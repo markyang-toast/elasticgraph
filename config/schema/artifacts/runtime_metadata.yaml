@@ -1889,31 +1889,43 @@ enum_types_by_name:
           field_path: widget.id
 graphql_resolvers_by_name:
   get_record_field_value:
+    needs_ast_node: false
     needs_lookahead: false
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::GetRecordFieldValue
       require_path: elastic_graph/graphql/resolvers/get_record_field_value
   indexed_type_root_fields:
+    needs_ast_node: false
     needs_lookahead: true
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::IndexedTypeRootFieldsResolver
       require_path: elastic_graph/graphql/resolvers/indexed_type_root_fields_resolver
   namespace_ref:
+    needs_ast_node: false
     needs_lookahead: false
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::NamespaceRef
       require_path: elastic_graph/graphql/resolvers/namespace_ref
   nested_relationships:
+    needs_ast_node: false
     needs_lookahead: true
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::NestedRelationships
       require_path: elastic_graph/graphql/resolvers/nested_relationships
+  object_with_ast_node:
+    needs_ast_node: true
+    needs_lookahead: false
+    resolver_ref:
+      name: ElasticGraph::GraphQL::Resolvers::Object::WithASTNode
+      require_path: elastic_graph/graphql/resolvers/object
   object_with_lookahead:
+    needs_ast_node: false
     needs_lookahead: true
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::Object::WithLookahead
       require_path: elastic_graph/graphql/resolvers/object
   object_without_lookahead:
+    needs_ast_node: false
     needs_lookahead: false
     resolver_ref:
       name: ElasticGraph::GraphQL::Resolvers::Object::WithoutLookahead
@@ -3274,16 +3286,16 @@ object_types_by_name:
     graphql_fields_by_name:
       full_address:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       geo_location:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       shapes:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   AddressAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -3352,10 +3364,10 @@ object_types_by_name:
     graphql_fields_by_name:
       full_address:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   AddressHighlights:
     graphql_fields_by_name:
       full_address:
@@ -3370,12 +3382,12 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   AddressTimestampsGroupedBy:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   Affiliations:
     graphql_fields_by_name:
       sponsorships_nested:
@@ -3388,7 +3400,7 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   AffiliationsFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -3397,7 +3409,7 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   AffiliationsHighlights:
     graphql_fields_by_name:
       sponsorships_nested:
@@ -3469,24 +3481,24 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CoachGroupedBy:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CoachHighlights:
     graphql_fields_by_name:
       id:
@@ -3578,22 +3590,22 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       coach_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CoachProfileAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -3662,19 +3674,19 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       coach_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CoachProfileHighlights:
     graphql_fields_by_name:
       coach_id:
@@ -3842,35 +3854,35 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       position:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_workspace_id:
         name_in_index: widget_workspace_id3
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ComponentAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -3943,26 +3955,26 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       position:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_workspace_id:
         name_in_index: widget_workspace_id3
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ComponentHighlights:
     graphql_fields_by_name:
       id:
@@ -4002,18 +4014,18 @@ object_types_by_name:
     graphql_fields_by_name:
       symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CurrencyDetailsGroupedBy:
     graphql_fields_by_name:
       symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   CurrencyDetailsHighlights:
     graphql_fields_by_name:
       symbol:
@@ -4029,33 +4041,33 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   DateGroupedBy:
     elasticgraph_category: date_grouped_by_object
     graphql_fields_by_name:
       as_date:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       as_day_of_week:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   DateListFilterInput:
     graphql_fields_by_name:
@@ -4068,39 +4080,39 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   DateTimeGroupedBy:
     elasticgraph_category: date_grouped_by_object
     graphql_fields_by_name:
       as_date:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       as_date_time:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       as_day_of_week:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       as_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   DateTimeListFilterInput:
     graphql_fields_by_name:
@@ -4158,16 +4170,16 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   DistributionChannelAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -4240,13 +4252,13 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   DistributionChannelHighlights:
     graphql_fields_by_name:
       id:
@@ -4319,16 +4331,16 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ElectricalPartAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -4397,13 +4409,13 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ElectricalPartHighlights:
     graphql_fields_by_name:
       id:
@@ -4419,29 +4431,29 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   GeneralManager:
     graphql_fields_by_name:
@@ -4458,24 +4470,24 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   GeneralManagerGroupedBy:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   GeneralManagerHighlights:
     graphql_fields_by_name:
       id:
@@ -4555,19 +4567,19 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   GeneralManagerProfileAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -4636,16 +4648,16 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_salary:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       team_league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   GeneralManagerProfileHighlights:
     graphql_fields_by_name:
       id:
@@ -4686,35 +4698,35 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   IntListFilterInput:
     graphql_fields_by_name:
@@ -4738,16 +4750,16 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       stock_ticker:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   InventorAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -4820,13 +4832,13 @@ object_types_by_name:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       stock_ticker:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   InventorHighlights:
     graphql_fields_by_name:
       id:
@@ -4848,35 +4860,35 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   JsonSafeLongListFilterInput:
     graphql_fields_by_name:
@@ -4889,23 +4901,23 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   LongStringAggregatedValues:
     elasticgraph_category: scalar_aggregated_values
@@ -4914,45 +4926,45 @@ object_types_by_name:
         computation_detail:
           function: avg
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_distinct_value_count:
         computation_detail:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       approximate_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_max:
         computation_detail:
           function: max
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_min:
         computation_detail:
           function: min
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       exact_sum:
         computation_detail:
           empty_bucket_value: 0
           function: sum
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   Manufacturer:
     graphql_fields_by_name:
@@ -5016,16 +5028,16 @@ object_types_by_name:
     graphql_fields_by_name:
       ceo:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ManufacturerAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -5094,13 +5106,13 @@ object_types_by_name:
     graphql_fields_by_name:
       ceo:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   ManufacturerHighlights:
     graphql_fields_by_name:
       ceo:
@@ -5176,16 +5188,16 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   MechanicalPartAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -5254,13 +5266,13 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   MechanicalPartHighlights:
     graphql_fields_by_name:
       id:
@@ -5284,10 +5296,10 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       currency:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   MoneyFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -5296,10 +5308,10 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       currency:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   MoneyHighlights:
     graphql_fields_by_name:
       currency:
@@ -5530,136 +5542,136 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amounts:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       ceo:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       position:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_dates:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_workspace_id:
         name_in_index: widget_workspace_id3
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   NamedEntityAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -5744,130 +5756,130 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       ceo:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       position:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_date:
         name_in_index: release_dates
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamp:
         name_in_index: release_timestamps
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tag:
         name_in_index: tags
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_workspace_id:
         name_in_index: widget_workspace_id3
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   NamedEntityHighlights:
     graphql_fields_by_name:
       ceo:
@@ -5978,16 +5990,16 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       stock_ticker:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   NamedInventorAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -6060,13 +6072,13 @@ object_types_by_name:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       stock_ticker:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   NamedInventorHighlights:
     graphql_fields_by_name:
       id:
@@ -6089,7 +6101,7 @@ object_types_by_name:
           empty_bucket_value: 0
           function: cardinality
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
     graphql_only_return_type: true
   OnlineStore:
     graphql_fields_by_name:
@@ -6187,19 +6199,19 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PartAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -6272,16 +6284,16 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       material:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       voltage:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PartHighlights:
     graphql_fields_by_name:
       id:
@@ -6334,21 +6346,21 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PersonGroupedBy:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nationality:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PersonHighlights:
     graphql_fields_by_name:
       id:
@@ -6399,13 +6411,13 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PhysicalStoreAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -6474,10 +6486,10 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PhysicalStoreHighlights:
     graphql_fields_by_name:
       id:
@@ -6504,16 +6516,16 @@ object_types_by_name:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nicknames:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PlayerFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -6522,13 +6534,13 @@ object_types_by_name:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PlayerHighlights:
     graphql_fields_by_name:
       affiliations:
@@ -6565,13 +6577,13 @@ object_types_by_name:
     graphql_fields_by_name:
       awards:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       games_played:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       year:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PlayerSeasonFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -6580,10 +6592,10 @@ object_types_by_name:
     graphql_fields_by_name:
       games_played:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       year:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PlayerSeasonHighlights:
     graphql_fields_by_name:
       awards:
@@ -6605,18 +6617,18 @@ object_types_by_name:
     graphql_fields_by_name:
       x:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       "y":
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   PositionGroupedBy:
     graphql_fields_by_name:
       x:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       "y":
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   Query:
     graphql_fields_by_name:
       address_aggregations:
@@ -6772,16 +6784,16 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   RetailAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -6854,13 +6866,13 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   RetailHighlights:
     graphql_fields_by_name:
       id:
@@ -6946,10 +6958,10 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   SponsorAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -7018,7 +7030,7 @@ object_types_by_name:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   SponsorHighlights:
     graphql_fields_by_name:
       id:
@@ -7039,10 +7051,10 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_total:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       sponsor_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   SponsorshipFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -7051,10 +7063,10 @@ object_types_by_name:
     graphql_fields_by_name:
       annual_total:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       sponsor_id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   SponsorshipHighlights:
     graphql_fields_by_name:
       annual_total:
@@ -7079,12 +7091,12 @@ object_types_by_name:
     graphql_fields_by_name:
       general_manager:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   StaffGroupedBy:
     graphql_fields_by_name:
       general_manager:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   StaffHighlights:
     graphql_fields_by_name:
       coaches:
@@ -7113,16 +7125,16 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   StoreAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -7195,13 +7207,13 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       established_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   StoreHighlights:
     graphql_fields_by_name:
       id:
@@ -7359,46 +7371,46 @@ object_types_by_name:
     graphql_fields_by_name:
       country_code:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       current_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       current_players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuation_moneys_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       past_names:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       stadium_location:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       staff:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       won_championships_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -7431,15 +7443,15 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationCurrentPlayersObjectSubAggregations:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationEdge:
     elasticgraph_category: relay_edge
     graphql_fields_by_name:
@@ -7453,79 +7465,79 @@ object_types_by_name:
     graphql_fields_by_name:
       current_players:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuation_moneys:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons:
         name_in_index: the_seasons
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationNestedFieldsSubAggregations:
     graphql_fields_by_name:
       current_players:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuation_moneys:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons:
         name_in_index: the_seasons
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationSeasonsObjectPlayersObjectAffiliationsSubAggregations:
     graphql_fields_by_name:
       sponsorships_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationSeasonsObjectPlayersObjectSubAggregations:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationSeasonsObjectSubAggregations:
     graphql_fields_by_name:
       players_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationStaffSubAggregations:
     graphql_fields_by_name:
       coaches:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamAggregationSubAggregations:
     graphql_fields_by_name:
       current_players_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       current_players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuation_moneys_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nested_fields:
         name_in_index: the_nested_fields
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nested_fields2:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       staff:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamCoachSubAggregation:
     graphql_fields_by_name:
       aggregated_values:
@@ -7573,15 +7585,15 @@ object_types_by_name:
     graphql_fields_by_name:
       count:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       uniform_colors:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamDetailsGroupedBy:
     graphql_fields_by_name:
       count:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamDetailsHighlights:
     graphql_fields_by_name:
       uniform_colors:
@@ -7610,31 +7622,31 @@ object_types_by_name:
     graphql_fields_by_name:
       country_code:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       current_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       current_players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       forbes_valuation_moneys_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       formed_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       league:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       staff:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamHighlights:
     graphql_fields_by_name:
       country_code:
@@ -7809,7 +7821,7 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamPlayerSubAggregationConnection:
     elasticgraph_category: nested_sub_aggregation_connection
     graphql_fields_by_name:
@@ -7823,10 +7835,10 @@ object_types_by_name:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamRecord:
     graphql_fields_by_name:
       first_win_on:
@@ -7848,19 +7860,19 @@ object_types_by_name:
     graphql_fields_by_name:
       first_win_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       last_win_on:
         name_in_index: last_win_date
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       losses:
         name_in_index: loss_count
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       wins:
         name_in_index: win_count
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamRecordFieldsListFilterInput:
     graphql_fields_by_name:
       count:
@@ -7883,19 +7895,19 @@ object_types_by_name:
     graphql_fields_by_name:
       first_win_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       last_win_on:
         name_in_index: last_win_date
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       losses:
         name_in_index: loss_count
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       wins:
         name_in_index: win_count
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamSeason:
     graphql_fields_by_name:
       count:
@@ -7930,29 +7942,29 @@ object_types_by_name:
     graphql_fields_by_name:
       count:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       notes:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       record:
         name_in_index: the_record
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       started_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       was_shortened:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       won_games_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       year:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamSeasonFieldsListFilterInput:
     graphql_fields_by_name:
       record:
@@ -7965,31 +7977,31 @@ object_types_by_name:
     graphql_fields_by_name:
       count:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       note:
         name_in_index: notes
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       record:
         name_in_index: the_record
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       started_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       was_shortened:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       won_game_at:
         name_in_index: won_games_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       year:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamSeasonHighlights:
     graphql_fields_by_name:
       notes:
@@ -8103,7 +8115,7 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamTeamSeasonPlayerSubAggregationConnection:
     elasticgraph_category: nested_sub_aggregation_connection
     graphql_fields_by_name:
@@ -8117,10 +8129,10 @@ object_types_by_name:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamTeamSeasonSponsorshipSubAggregation:
     graphql_fields_by_name:
       aggregated_values:
@@ -8168,23 +8180,23 @@ object_types_by_name:
     graphql_fields_by_name:
       sponsorships_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamTeamSeasonSubAggregationPlayersObjectSubAggregations:
     graphql_fields_by_name:
       affiliations:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       seasons_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   TeamTeamSeasonSubAggregationSubAggregations:
     graphql_fields_by_name:
       players_nested:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       players_object:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   Wholesale:
     graphql_fields_by_name:
       active:
@@ -8199,10 +8211,10 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WholesaleAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -8275,7 +8287,7 @@ object_types_by_name:
     graphql_fields_by_name:
       active:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WholesaleHighlights:
     graphql_fields_by_name:
       id:
@@ -8555,108 +8567,108 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amounts:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_dates:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -8792,41 +8804,41 @@ object_types_by_name:
     graphql_fields_by_name:
       details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       max_weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nested_fields:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       oldest_widget_created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_fee_currencies:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_names:
         name_in_index: widget_names2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetCurrencyAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -8899,29 +8911,29 @@ object_types_by_name:
     graphql_fields_by_name:
       details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       max_weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       nested_fields:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       oldest_widget_created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget_name:
         name_in_index: widget_names2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetCurrencyHighlights:
     graphql_fields_by_name:
       details:
@@ -8958,12 +8970,12 @@ object_types_by_name:
     graphql_fields_by_name:
       max_widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetCurrencyNestedFieldsGroupedBy:
     graphql_fields_by_name:
       max_widget_cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetEdge:
     elasticgraph_category: relay_edge
     graphql_fields_by_name:
@@ -8995,105 +9007,105 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_date:
         name_in_index: release_dates
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamp:
         name_in_index: release_timestamps
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tag:
         name_in_index: tags
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetHighlights:
     graphql_fields_by_name:
       cost:
@@ -9166,12 +9178,12 @@ object_types_by_name:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetInternalDetailsGroupedBy:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetInternalDetailsHighlights:
     graphql_fields_by_name:
       name:
@@ -9189,10 +9201,10 @@ object_types_by_name:
     graphql_fields_by_name:
       colors:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       sizes:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetOptionSetsHighlights:
     graphql_fields_by_name:
       colors:
@@ -9220,17 +9232,17 @@ object_types_by_name:
     graphql_fields_by_name:
       color:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       is_draft:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_size:
         name_in_index: the_sighs
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetOptionsFilterInput:
     graphql_fields_by_name:
       the_size:
@@ -9239,17 +9251,17 @@ object_types_by_name:
     graphql_fields_by_name:
       color:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       is_draft:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_size:
         name_in_index: the_sighs
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetOptionsHighlights:
     graphql_fields_by_name:
       color:
@@ -9408,120 +9420,120 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amounts:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       full_address:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       geo_location:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_dates:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       shapes:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tags:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetOrAddressAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -9604,111 +9616,111 @@ object_types_by_name:
     graphql_fields_by_name:
       amount_cents:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       amount_cents2:
         name_in_index: amount_cents
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_introduced_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_primary_continent:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_symbol:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       cost_currency_unit:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at2:
         name_in_index: created_at
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_at_time_of_day:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       created_on:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       fees:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       full_address:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_details:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_highlightable_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       internal_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       metadata:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       named_inventor:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       options:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_date:
         name_in_index: release_dates
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       release_timestamp:
         name_in_index: release_timestamps
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       size:
         name_in_index: options.size
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       tag:
         name_in_index: tags
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       the_options:
         name_in_index: the_opts
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       timestamps:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       weight_in_ng_str:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_id:
         name_in_index: workspace_id2
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       workspace_name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetOrAddressHighlights:
     graphql_fields_by_name:
       cost:
@@ -9840,13 +9852,13 @@ object_types_by_name:
     graphql_fields_by_name:
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetWorkspaceAggregation:
     elasticgraph_category: indexed_aggregation
     graphql_fields_by_name:
@@ -9915,10 +9927,10 @@ object_types_by_name:
     graphql_fields_by_name:
       name:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       widget:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WidgetWorkspaceHighlights:
     graphql_fields_by_name:
       id:
@@ -9942,18 +9954,18 @@ object_types_by_name:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WorkspaceWidgetGroupedBy:
     graphql_fields_by_name:
       created_at:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
       id:
         resolver:
-          name: object_with_lookahead
+          name: object_with_ast_node
   WorkspaceWidgetHighlights:
     graphql_fields_by_name:
       id:

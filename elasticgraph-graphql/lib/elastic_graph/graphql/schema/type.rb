@@ -32,7 +32,7 @@ module ElasticGraph
           object_runtime_metadata,
           enum_runtime_metadata,
           scalar_runtime_metadata,
-          resolvers_needing_lookahead
+          extras_by_resolver_name
         )
           @schema = schema
           @graphql_type = graphql_type
@@ -45,7 +45,7 @@ module ElasticGraph
           @elasticgraph_category = object_runtime_metadata&.elasticgraph_category
           @graphql_only_return_type = object_runtime_metadata&.graphql_only_return_type
           @enum_runtime_metadata = enum_runtime_metadata
-          @resolvers_needing_lookahead = resolvers_needing_lookahead
+          @extras_by_resolver_name = extras_by_resolver_name
           @enum_value_names_by_original_name = (enum_runtime_metadata&.values_by_name || {}).to_h do |name, value|
             [value.alternate_original_name || name, name]
           end
@@ -316,7 +316,7 @@ module ElasticGraph
               self,
               field,
               @object_runtime_metadata&.graphql_fields_by_name&.dig(name),
-              @resolvers_needing_lookahead
+              @extras_by_resolver_name
             )
           end
         end

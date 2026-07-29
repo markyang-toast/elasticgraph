@@ -434,6 +434,25 @@ module ElasticGraph
       #       #
       #       # Note: there is overhead involved in providing the `lookahead`, so it's best to not
       #       # request it (by defining it as one of the `resolve` arguments) unless it's really needed.
+      #       # If you only need the response key of the field being resolved, request `ast_node`
+      #       # instead--it's much cheaper than `lookahead`.
+      #     end
+      #   end
+      #
+      # @example Register a custom resolver that uses the field's AST node
+      #
+      #   # In `artist_resolver.rb`:
+      #   class ArtistResolver
+      #     def initialize(elasticgraph_graphql:, config:)
+      #     end
+      #
+      #     def resolve(field:, object:, args:, context:, ast_node:)
+      #       # The extra `ast_node` argument provides the AST node of the field being resolved,
+      #       # which exposes the response key via `ast_node.alias || ast_node.name`.
+      #       #
+      #       # Unlike `lookahead`, it does not let you inspect child selections, but it is far
+      #       # cheaper: the GraphQL gem must allocate a `Lookahead` per field per object to
+      #       # provide `lookahead`, whereas the `ast_node` is already on hand.
       #     end
       #   end
       #
@@ -456,16 +475,19 @@ module ElasticGraph
       def register_graphql_resolver(name, klass, defined_at:, built_in: false, **resolver_config)
         extension = SchemaArtifacts::RuntimeMetadata::Extension.new(klass, defined_at, resolver_config)
 
-        needs_lookahead =
-          if extension.verify_against(SchemaArtifacts::RuntimeMetadata::GraphQLResolver::InterfaceWithLookahead).empty?
-            true
-          else
-            extension.verify_against!(SchemaArtifacts::RuntimeMetadata::GraphQLResolver::InterfaceWithoutLookahead)
-            false
-          end
+        needs_lookahead = needs_ast_node = false
+
+        if extension.verify_against(SchemaArtifacts::RuntimeMetadata::GraphQLResolver::InterfaceWithLookahead).empty?
+          needs_lookahead = true
+        elsif extension.verify_against(SchemaArtifacts::RuntimeMetadata::GraphQLResolver::InterfaceWithASTNode).empty?
+          needs_ast_node = true
+        else
+          extension.verify_against!(SchemaArtifacts::RuntimeMetadata::GraphQLResolver::InterfaceWithoutLookahead)
+        end
 
         resolver = SchemaArtifacts::RuntimeMetadata::GraphQLResolver.new(
           needs_lookahead: needs_lookahead,
+          needs_ast_node: needs_ast_node,
           resolver_ref: extension.to_dumpable_hash
         )
 

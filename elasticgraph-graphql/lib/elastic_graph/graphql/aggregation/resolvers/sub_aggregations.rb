@@ -10,6 +10,7 @@ require "elastic_graph/graphql/aggregation/composite_grouping_adapter"
 require "elastic_graph/graphql/aggregation/field_path_encoder"
 require "elastic_graph/graphql/aggregation/key"
 require "elastic_graph/graphql/aggregation/non_composite_grouping_adapter"
+require "elastic_graph/graphql/aggregation/path_segment"
 require "elastic_graph/graphql/aggregation/resolvers/count_detail"
 require "elastic_graph/graphql/decoded_cursor"
 require "elastic_graph/graphql/resolvers/resolvable_value"
@@ -20,8 +21,8 @@ module ElasticGraph
     module Aggregation
       module Resolvers
         class SubAggregations < ::Data.define(:schema, :sub_aggregations, :parent_queries, :sub_aggs_by_agg_key, :field_path)
-          def resolve(field:, object:, args:, context:, lookahead:)
-            path_segment = PathSegment.for(field: field, lookahead: lookahead)
+          def resolve(field:, object:, args:, context:, ast_node:)
+            path_segment = PathSegment.for_ast_node(ast_node, field: field)
             new_field_path = field_path + [path_segment]
             return with(field_path: new_field_path) unless field.type.elasticgraph_category == :nested_sub_aggregation_connection
 

@@ -16,7 +16,7 @@ module ResolverHelperMethods
   def resolve(type_name, field_name, document = nil, **options)
     field = graphql.schema.field_named(type_name, field_name)
     query_overrides = options.fetch(:query_overrides) { {} }
-    args = field.args_to_schema_form(options.except(:query_overrides, :lookahead))
+    args = field.args_to_schema_form(options.except(:query_overrides, :lookahead, :ast_node))
     lookahead = options[:lookahead] || GraphQL::Execution::Lookahead::NULL_LOOKAHEAD
     query_details_tracker = ElasticGraph::GraphQL::QueryDetailsTracker.empty
 
@@ -50,6 +50,8 @@ module ResolverHelperMethods
 
         if resolver.method(:resolve).parameters.include?([:keyreq, :lookahead])
           resolver.resolve(field: field, object: document, context: context, args: args, lookahead: lookahead, &query_builder)
+        elsif resolver.method(:resolve).parameters.include?([:keyreq, :ast_node])
+          resolver.resolve(field: field, object: document, context: context, args: args, ast_node: options.fetch(:ast_node) { lookahead.ast_nodes.first })
         else
           resolver.resolve(field: field, object: document, context: context, args: args)
         end

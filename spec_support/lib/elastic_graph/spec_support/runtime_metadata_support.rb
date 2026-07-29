@@ -180,9 +180,10 @@ module ElasticGraph
           "require_path" => "elastic_graph/graphql/resolvers/get_record_field_value"
         }
 
-        def graphql_resolver_with(needs_lookahead: false, resolver_ref: DEFAULT_RESOLVER_REF)
+        def graphql_resolver_with(needs_lookahead: false, needs_ast_node: false, resolver_ref: DEFAULT_RESOLVER_REF)
           GraphQLResolver.new(
             needs_lookahead: needs_lookahead,
+            needs_ast_node: needs_ast_node,
             resolver_ref: resolver_ref
           )
         end
@@ -222,6 +223,10 @@ module ElasticGraph
 
         def graphql_resolver_with_lookahead(**config)
           Extension.new(GraphQLResolverWithLookahead, "elastic_graph/spec_support/example_extensions/graphql_resolvers", config)
+        end
+
+        def graphql_resolver_with_ast_node(**config)
+          Extension.new(GraphQLResolverWithASTNode, "elastic_graph/spec_support/example_extensions/graphql_resolvers", config)
         end
 
         def graphql_resolver_without_lookahead(**config)

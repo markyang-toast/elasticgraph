@@ -20,7 +20,7 @@ module ElasticGraph
 
         attr_reader :schema, :schema_element_names, :graphql_field, :name_in_index, :relation, :computation_detail, :resolver
 
-        def initialize(schema, parent_type, graphql_field, runtime_metadata, resolvers_needing_lookahead)
+        def initialize(schema, parent_type, graphql_field, runtime_metadata, extras_by_resolver_name)
           @schema = schema
           @schema_element_names = schema.element_names
           @parent_type = parent_type
@@ -29,7 +29,9 @@ module ElasticGraph
           @computation_detail = runtime_metadata&.computation_detail
           @resolver = runtime_metadata&.resolver
           @name_in_index = runtime_metadata&.name_in_index || name
-          @graphql_field.extras([:lookahead]) if resolvers_needing_lookahead.include?(@resolver&.name)
+          if (extras = extras_by_resolver_name[@resolver&.name])
+            @graphql_field.extras(extras)
+          end
         end
 
         def type

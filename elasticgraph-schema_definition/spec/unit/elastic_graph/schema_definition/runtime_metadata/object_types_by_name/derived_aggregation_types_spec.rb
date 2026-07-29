@@ -61,7 +61,7 @@ module ElasticGraph
           "description" => graphql_field_with(
             name_in_index: "description_index",
             relation: nil,
-            resolver: configured_graphql_resolver(:object_with_lookahead)
+            resolver: configured_graphql_resolver(:object_with_ast_node)
           )
         })
       end
@@ -79,12 +79,12 @@ module ElasticGraph
           "cost" => graphql_field_with(
             name_in_index: "cost_index",
             relation: nil,
-            resolver: configured_graphql_resolver(:object_with_lookahead)
+            resolver: configured_graphql_resolver(:object_with_ast_node)
           ),
           "id" => graphql_field_with(
             name_in_index: "id",
             relation: nil,
-            resolver: configured_graphql_resolver(:object_with_lookahead)
+            resolver: configured_graphql_resolver(:object_with_ast_node)
           )
         })
       end
@@ -115,14 +115,14 @@ module ElasticGraph
         expect(team_sub_aggs.graphql_fields_by_name).to eq({
           "collections" => graphql_field_with(
             name_in_index: "collections_in_index",
-            resolver: configured_graphql_resolver(:object_with_lookahead)
+            resolver: configured_graphql_resolver(:object_with_ast_node)
           )
         })
 
         expect(team_collections_sub_aggs.graphql_fields_by_name).to eq({
           "players" => graphql_field_with(
             name_in_index: "the_players",
-            resolver: configured_graphql_resolver(:object_with_lookahead)
+            resolver: configured_graphql_resolver(:object_with_ast_node)
           )
         })
       end

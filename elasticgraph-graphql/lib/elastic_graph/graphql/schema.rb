@@ -42,9 +42,15 @@ module ElasticGraph
         @runtime_metadata = runtime_metadata
         @datastore_search_router = datastore_search_router
 
-        resolvers_needing_lookahead = runtime_metadata.graphql_resolvers_by_name.filter_map do |name, resolver|
-          name if resolver.needs_lookahead
-        end.to_set
+        # The GraphQL gem only provides "extras" to a field when they've been requested, and there is
+        # overhead to providing them, so here we determine the minimal set of extras each resolver needs.
+        extras_by_resolver_name = runtime_metadata.graphql_resolvers_by_name.filter_map do |name, resolver|
+          if resolver.needs_lookahead
+            [name, [:lookahead]]
+          elsif resolver.needs_ast_node
+            [name, [:ast_node]]
+          end
+        end.to_h
 
         @types_by_graphql_type = Hash.new do |hash, key|
           hash[key] = Type.new(
@@ -54,7 +60,7 @@ module ElasticGraph
             runtime_metadata.object_types_by_name[key.graphql_name],
             runtime_metadata.enum_types_by_name[key.graphql_name],
             runtime_metadata.scalar_types_by_name[key.graphql_name],
-            resolvers_needing_lookahead
+            extras_by_resolver_name
           )
         end
 
