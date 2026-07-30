@@ -229,5 +229,6 @@ module ElasticGraph
     # @dynamic graphql_http_endpoint, graphql_query_executor, schema, datastore_search_router, filter_interpreter, filter_node_interpreter
     # @dynamic datastore_query_builder, graphql_gem_plugins, graphql_adapter, resolver_query_adapter, named_graphql_resolvers, datastore_query_adapters, monotonic_clock
     # @dynamic load_dependencies_eagerly, self.from_parsed_yaml, filter_args_translator, sub_aggregation_grouping_adapter
+    # @dynamic use_next_execution_engine?
   end
 end

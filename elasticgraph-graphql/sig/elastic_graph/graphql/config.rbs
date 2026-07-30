@@ -6,6 +6,7 @@ module ElasticGraph
       attr_reader default_page_size: ::Integer
       attr_reader max_page_size: ::Integer
       attr_reader slow_query_latency_warning_threshold_in_ms: ::Integer
+      attr_reader use_next_execution_engine: bool
       attr_reader client_resolver: Client::_Resolver
       attr_reader extension_modules: ::Array[::Module]
       attr_reader extension_settings: parsedYamlSettings
@@ -14,6 +15,7 @@ module ElasticGraph
         ?default_page_size: ::Integer,
         ?max_page_size: ::Integer,
         ?slow_query_latency_warning_threshold_in_ms: ::Integer,
+        ?use_next_execution_engine: bool,
         ?client_resolver: Client::_Resolver,
         ?extension_modules: ::Array[::Module],
         ?extension_settings: parsedYamlSettings
@@ -23,6 +25,7 @@ module ElasticGraph
         ?default_page_size: ::Integer,
         ?max_page_size: ::Integer,
         ?slow_query_latency_warning_threshold_in_ms: ::Integer,
+        ?use_next_execution_engine: bool,
         ?client_resolver: Client::_Resolver,
         ?extension_modules: ::Array[::Module],
         ?extension_settings: parsedYamlSettings

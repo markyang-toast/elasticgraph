@@ -17,11 +17,12 @@ module ElasticGraph
       # @dynamic schema
       attr_reader :schema
 
-      def initialize(schema:, monotonic_clock:, logger:, slow_query_threshold_ms:)
+      def initialize(schema:, monotonic_clock:, logger:, slow_query_threshold_ms:, use_next_execution_engine: false)
         @schema = schema
         @monotonic_clock = monotonic_clock
         @logger = logger
         @slow_query_threshold_ms = slow_query_threshold_ms
+        @use_next_execution_engine = use_next_execution_engine
       end
 
       # Executes the given `query_string` using the provided `variables`.
@@ -144,6 +145,15 @@ module ElasticGraph
         # Log the query before starting to execute it, in case there's a lambda timeout, in which case
         # we won't get any other logged messages for the query.
         @logger.info "Starting to execute query #{query.fingerprint} for client #{client.description}."
+
+        # `GraphQL::Query#result` hardcodes the legacy depth-first engine (it calls
+        # `GraphQL::Execution::Interpreter.run_all` directly, without consulting the schema's
+        # `default_execution_next` flag), so to use the breadth-first engine we must invoke it
+        # ourselves. It assigns `query.result_values`, after which `query.result` wraps those
+        # values in the same `GraphQL::Query::Result` the legacy engine produces.
+        if @use_next_execution_engine
+          ::GraphQL::Execution::Next.run_all(@schema.graphql_schema, [query], context: query.context)
+        end
 
         query.result
       rescue => ex

@@ -9,6 +9,8 @@
 require "graphql"
 require "elastic_graph/constants"
 require "elastic_graph/errors"
+require "elastic_graph/graphql/next_execution_compatibility"
+require "elastic_graph/graphql/resolvers/breadth_first_fanout"
 require "elastic_graph/graphql/schema/field"
 require "elastic_graph/graphql/schema/type"
 
@@ -34,7 +36,8 @@ module ElasticGraph
         datastore_search_router:,
         index_definitions_by_graphql_type:,
         graphql_gem_plugins:,
-        graphql_adapter:
+        graphql_adapter:,
+        use_next_execution_engine: false
       )
         @element_names = runtime_metadata.schema_element_names
         @config = config
@@ -68,6 +71,11 @@ module ElasticGraph
           default_resolve: graphql_adapter,
           using: graphql_gem_plugins
         )
+
+        if use_next_execution_engine
+          Resolvers::BreadthFirstFanout.apply(@graphql_schema)
+          NextExecutionCompatibility.apply(@graphql_schema)
+        end
 
         # Pre-load all defined types so that all field extras can get configured as part
         # of loading the schema, before we execute the first query.

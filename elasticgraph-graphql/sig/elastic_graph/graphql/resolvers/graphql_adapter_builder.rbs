@@ -9,11 +9,13 @@ module ElasticGraph
         @runtime_metadata: SchemaArtifacts::RuntimeMetadata::Schema
         @resolvers_by_name_and_field_config: ::Hash[::Symbol, ::Hash[::Hash[::Symbol, untyped], resolver]]
         @query_adapter: QueryAdapter
+        @use_next_execution_engine: bool
 
         def initialize: (
           runtime_metadata: SchemaArtifacts::RuntimeMetadata::Schema,
           named_resolvers: namedGraphQLResolversHash,
-          query_adapter: QueryAdapter
+          query_adapter: QueryAdapter,
+          ?use_next_execution_engine: bool
         ) -> void
 
         def build: () -> ::Hash[::String, untyped]

@@ -91,7 +91,10 @@ module ElasticGraph
             )
           end
         end
-        stub_const("RuntimeMetadataExtensionModule", runtime_metadata_extension_module)
+        # The name must be unique across the whole suite: `ComponentExtension.loader` is memoized
+        # per-process and caches loaded extensions by constant name, so two specs stubbing the same
+        # name would get each other's module depending on which ran first.
+        stub_const("GraphQLRuntimeMetadataExtensionModule", runtime_metadata_extension_module)
 
         extended_graphql = build_graphql(
           extension_modules: [config_extension_module],

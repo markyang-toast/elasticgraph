@@ -16,6 +16,7 @@ module ElasticGraph
       :default_page_size,
       :max_page_size,
       :slow_query_latency_warning_threshold_in_ms,
+      :use_next_execution_engine,
       :client_resolver,
       :extension_modules,
       :extension_settings
@@ -47,6 +48,14 @@ module ElasticGraph
             minimum: 0,
             default: 5000,
             examples: [3000, 5000, 10000]
+          },
+          use_next_execution_engine: {
+            description: "Enables the GraphQL gem's experimental breadth-first execution engine (`GraphQL::Execution::Next`) " \
+              "in place of the default depth-first engine. The engine is experimental, so this defaults to `false`. It can " \
+              "also be enabled via the `GRAPHQL_EXECUTION_NEXT` environment variable.",
+            type: "boolean",
+            default: false,
+            examples: [true, false]
           },
           client_resolver: {
             description: "Object used to identify the client of a GraphQL query based on the HTTP request.",

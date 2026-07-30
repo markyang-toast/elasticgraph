@@ -1,0 +1,19 @@
+module ElasticGraph
+  class GraphQL
+    module NextExecutionCompatibility
+      module InputValuesNullValueFix : ::GraphQL::Execution::InputValues
+        def value_from_ast: (::GraphQL::Language::Nodes::AbstractNode, ::GraphQL::Schema::_Type) -> untyped
+      end
+
+      module DeclarativeOperationDirective
+        def resolve_operation: (untyped, untyped, untyped, untyped, untyped) -> nil
+      end
+
+      module FinalizeQueryLevelErrorFix : ::GraphQL::Execution::Finalize
+        def initialize: (::GraphQL::Query, untyped, untyped) -> void
+      end
+
+      def self.apply: (::GraphQL::Schema) -> void
+    end
+  end
+end

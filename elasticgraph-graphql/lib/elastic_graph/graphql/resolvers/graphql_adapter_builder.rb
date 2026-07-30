@@ -7,6 +7,7 @@
 # frozen_string_literal: true
 
 require "elastic_graph/errors"
+require "elastic_graph/graphql/resolvers/breadth_first_fanout"
 
 module ElasticGraph
   class GraphQL
@@ -14,9 +15,15 @@ module ElasticGraph
       # Provides an adapter to the GraphQL gem by building a resolver implementation hash as documented here:
       #
       # https://graphql-ruby.org/schema/sdl.html
+      #
+      # When `use_next_execution_engine` is enabled, the resolver lambda of each field whose
+      # resolver can reach the datastore is wrapped by `BreadthFirstFanout`, so that the
+      # breadth-first execution engine retains the dataloader batching and per-object error
+      # isolation the legacy engine provides.
       class GraphQLAdapterBuilder
-        def initialize(runtime_metadata:, named_resolvers:, query_adapter:)
+        def initialize(runtime_metadata:, named_resolvers:, query_adapter:, use_next_execution_engine: false)
           @runtime_metadata = runtime_metadata
+          @use_next_execution_engine = use_next_execution_engine
           @resolvers_by_name_and_field_config = named_resolvers.transform_values do |resolver_constructor|
             ::Hash.new do |hash, field_config|
               hash[field_config] = resolver_constructor.call(field_config)
@@ -96,6 +103,10 @@ module ElasticGraph
                       schema_field.coerce_result(result)
                     end
                   end
+
+                if @use_next_execution_engine && BreadthFirstFanout.needed_for?(configured_resolver.name)
+                  resolver_lambda = BreadthFirstFanout.wrap(resolver_lambda)
+                end
 
                 [field_name, resolver_lambda]
               end
