@@ -20,6 +20,7 @@ module ElasticGraph
       slow_query_latency_warning_threshold_in_ms: 30000,
       max_page_size: 500,
       default_page_size: 50,
+      use_next_execution_engine: ENV["GRAPHQL_EXECUTION_NEXT"] == "1",
       datastore_core: nil,
       graphql_adapter: nil,
       monotonic_clock: nil,
@@ -34,7 +35,8 @@ module ElasticGraph
       config = GraphQL::Config.new(
         max_page_size: max_page_size,
         default_page_size: default_page_size,
-        slow_query_latency_warning_threshold_in_ms: slow_query_latency_warning_threshold_in_ms
+        slow_query_latency_warning_threshold_in_ms: slow_query_latency_warning_threshold_in_ms,
+        use_next_execution_engine: use_next_execution_engine
       )
 
       # These config settings must bypass the JSON schema validation so we provide them via `with`.

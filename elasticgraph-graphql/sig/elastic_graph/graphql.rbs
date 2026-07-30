@@ -32,6 +32,9 @@ module ElasticGraph
     @schema: Schema?
     def schema: () -> Schema
 
+    @use_next_execution_engine: bool
+    def use_next_execution_engine?: () -> bool
+
     @datastore_search_router: DatastoreSearchRouter?
     def datastore_search_router: () -> DatastoreSearchRouter
 

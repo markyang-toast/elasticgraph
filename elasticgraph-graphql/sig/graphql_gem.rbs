@@ -5,15 +5,40 @@ module GraphQL
   def self.eager_load!: () -> void
 
   class Dataloader
+    class Request
+      def load: () -> untyped
+    end
+
     class Source
+      attr_reader dataloader: Dataloader
       def load_all: [Req, Res] (::Array[Req]) -> ::Array[Res]
       def load: [Req, Res] (Req) -> Res
+      def request: (untyped) -> Request
     end
 
     def with: (Class, *untyped, **untyped) -> Source
+    def append_job: () { () -> void } -> nil
+    def run_isolated: [T] () { () -> T } -> T
   end
 
   module Execution
+    class InputValues
+      def value_from_ast: (Language::Nodes::AbstractNode, Schema::_Type) -> untyped
+    end
+
+    class Finalize
+      def initialize: (Query, untyped, untyped) -> void
+    end
+
+    module Next
+      def self.run_all: (
+        Schema,
+        ::Array[Query],
+        ?context: untyped,
+        ?max_complexity: ::Integer?
+      ) -> untyped
+    end
+
     class Lookahead
       attr_reader ast_nodes: ::Array[Language::Nodes::Field]
       attr_reader name: ::String
@@ -36,6 +61,7 @@ module GraphQL
   end
 
   class ExecutionError < StandardError
+    attr_accessor path: ::Array[::String | ::Integer]?
   end
 
   module Language
@@ -66,6 +92,10 @@ module GraphQL
 
       class FragmentDefinition < AbstractNode
         attr_reader directives: ::Array[Directive]
+      end
+
+      class NullValue < AbstractNode
+        attr_reader name: ::String
       end
 
       class OperationDefinition < AbstractNode
@@ -104,6 +134,7 @@ module GraphQL
       ?context: ::Hash[::Symbol, untyped]?
     ) -> void
 
+    attr_reader context: Context
     attr_reader document: Language::Nodes::Document
 
     # Commented out to discourage use--`selected_operation_name` should be preferred since `operation_name`
@@ -127,6 +158,7 @@ module GraphQL
       def fetch: (untyped) -> untyped
       def add_error: (ExecutionError) -> void
       def dataloader: () -> Dataloader
+      def errors: () -> ::Array[ExecutionError]
     end
 
     class Result
@@ -140,6 +172,8 @@ module GraphQL
     attr_reader static_validator: StaticValidation::Validator
 
     def execute: (::String, **untyped) -> ::Hash[::String, untyped]
+    def directives: () -> ::Hash[::String, ::Class]
+    def lazy_resolve: (::Class, ::Symbol) -> void
     def self.from_definition: (::String) -> Schema
     def to_definition: () -> ::String
     def type_from_ast: (

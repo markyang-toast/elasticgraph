@@ -80,7 +80,8 @@ module ElasticGraph
           schema: schema,
           monotonic_clock: monotonic_clock,
           logger: logger,
-          slow_query_threshold_ms: @config.slow_query_latency_warning_threshold_in_ms
+          slow_query_threshold_ms: @config.slow_query_latency_warning_threshold_in_ms,
+          use_next_execution_engine: use_next_execution_engine?
         )
       end
     end
@@ -97,9 +98,23 @@ module ElasticGraph
           datastore_search_router: datastore_search_router,
           index_definitions_by_graphql_type: @datastore_core.index_definitions_by_graphql_type,
           graphql_gem_plugins: graphql_gem_plugins,
-          graphql_adapter: graphql_adapter
+          graphql_adapter: graphql_adapter,
+          use_next_execution_engine: use_next_execution_engine?
         )
       end
+    end
+
+    # Indicates if the GraphQL gem's experimental breadth-first execution engine
+    # (`GraphQL::Execution::Next`) should be used in place of the default depth-first engine.
+    #
+    # This is enabled by the `graphql.use_next_execution_engine` config setting, or by setting the
+    # `GRAPHQL_EXECUTION_NEXT` environment variable (which allows the test suite to be run either
+    # way without editing config files).
+    #
+    # @private
+    def use_next_execution_engine?
+      return @use_next_execution_engine if defined?(@use_next_execution_engine)
+      @use_next_execution_engine = @config.use_next_execution_engine || ENV["GRAPHQL_EXECUTION_NEXT"] == "1"
     end
 
     # @private
@@ -160,7 +175,8 @@ module ElasticGraph
         Resolvers::GraphQLAdapterBuilder.new(
           named_resolvers: named_graphql_resolvers,
           query_adapter: resolver_query_adapter,
-          runtime_metadata: runtime_metadata
+          runtime_metadata: runtime_metadata,
+          use_next_execution_engine: use_next_execution_engine?
         ).build
       end
     end

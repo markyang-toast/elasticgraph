@@ -1,0 +1,35 @@
+module ElasticGraph
+  class GraphQL
+    module Resolvers
+      module BreadthFirstFanout
+        type resolverLambda = ^(untyped, ::Hash[::Symbol, untyped], ::GraphQL::Query::Context) -> untyped
+
+        class Slot
+          attr_accessor thunk: ^() -> untyped
+          attr_accessor value: untyped
+          attr_accessor error: ::GraphQL::ExecutionError?
+          def initialize: (^() -> untyped, ?untyped, ?::GraphQL::ExecutionError?) -> void
+        end
+
+        class Deferred
+          def initialize: (::GraphQL::Dataloader::Request) -> void
+          def resolve: () -> untyped
+
+          private
+
+          @request: ::GraphQL::Dataloader::Request
+        end
+
+        class Source < ::GraphQL::Dataloader::Source
+          def fetch: (::Array[Slot]) -> ::Array[untyped]
+        end
+
+        NON_DATASTORE_RESOLVER_NAMES: ::Set[::Symbol]
+
+        def self.apply: (::GraphQL::Schema) -> void
+        def self.needed_for?: (::Symbol) -> bool
+        def self.wrap: (resolverLambda) -> resolverLambda
+      end
+    end
+  end
+end

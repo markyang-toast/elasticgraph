@@ -396,7 +396,7 @@ module ElasticGraph
         context "when extensions provide additional log data" do
           it "includes extension data in the logged duration message" do
             # Simulate an extension setting data in the query tracker
-            allow(::GraphQL::Execution::Interpreter).to receive(:run_all).and_wrap_original do |original, schema, queries, context:|
+            allow(graphql_execution_engine).to receive(:run_all).and_wrap_original do |original, schema, queries, context:|
               query_tracker = context[:elastic_graph_query_tracker]
               query_tracker["custom_field"] = "custom_value"
               query_tracker["another_field"] = "another_value"
@@ -492,7 +492,54 @@ module ElasticGraph
           end
         end
 
-        def define_graphql
+        # These verify both settings of the flag regardless of which engine the suite is being run
+        # with, since the point of the flag is that either engine can be selected at runtime.
+        context "when configured with an explicit execution engine" do
+          let(:query) do
+            <<~QUERY
+              query GetColors {
+                colors(args: {red: 12}) {
+                  red
+                  green
+                  blue
+                }
+              }
+            QUERY
+          end
+
+          it "runs the query on the breadth-first engine when `use_next_execution_engine` is true" do
+            expect(::GraphQL::Execution::Next).to receive(:run_all).and_call_original
+
+            result = define_query_executor(use_next_execution_engine: true).execute(query)
+
+            expect(result["errors"]).to be nil
+          end
+
+          it "runs the query on the legacy depth-first engine when `use_next_execution_engine` is false" do
+            expect(::GraphQL::Execution::Next).not_to receive(:run_all)
+
+            # The env var is unset here because it ORs with the config setting, so it would otherwise
+            # force the breadth-first engine on when the suite is being run with it.
+            result = on_legacy_engine { |executor| executor.execute(query) }
+
+            expect(result["errors"]).to be nil
+          end
+
+          it "returns the same result either way" do
+            on_next = define_query_executor(use_next_execution_engine: true).execute(query)
+            on_legacy = on_legacy_engine { |executor| executor.execute(query) }
+
+            expect(on_next.to_h).to eq on_legacy.to_h
+          end
+
+          def on_legacy_engine
+            with_env("GRAPHQL_EXECUTION_NEXT" => nil) do
+              yield define_query_executor(use_next_execution_engine: false)
+            end
+          end
+        end
+
+        def define_graphql(**options)
           router = instance_double("ElasticGraph::GraphQL::DatastoreSearchRouter")
           allow(router).to receive(:msearch) do |queries, query_tracker:, opaque_id_parts: nil|
             self.submitted_opaque_id_parts = opaque_id_parts
@@ -516,18 +563,31 @@ module ElasticGraph
             schema_artifacts: schema_artifacts,
             datastore_search_router: router,
             monotonic_clock: monotonic_clock,
-            slow_query_latency_warning_threshold_in_ms: slow_query_threshold_ms
+            slow_query_latency_warning_threshold_in_ms: slow_query_threshold_ms,
+            **options
           )
         end
 
-        def define_query_executor
-          define_graphql.graphql_query_executor
+        def define_query_executor(**options)
+          define_graphql(**options).graphql_query_executor
+        end
+
+        # The execution engine `QueryExecutor` will run queries with. Tests which hook into query
+        # execution itself must target this rather than hardcoding an engine, since the suite can be
+        # run with either one (see the `GRAPHQL_EXECUTION_NEXT` environment variable).
+        #
+        # A lookup is used in place of a conditional so that this has full coverage under both.
+        def graphql_execution_engine
+          {
+            true => ::GraphQL::Execution::Next,
+            false => ::GraphQL::Execution::Interpreter
+          }.fetch(ENV["GRAPHQL_EXECUTION_NEXT"] == "1")
         end
 
         def submitted_query_context_for(...)
           submitted_context = nil
 
-          allow(::GraphQL::Execution::Interpreter).to receive(:run_all).and_wrap_original do |original, schema, queries, context:|
+          allow(graphql_execution_engine).to receive(:run_all).and_wrap_original do |original, schema, queries, context:|
             submitted_context = context
             original.call(schema, queries, context: context)
           end
